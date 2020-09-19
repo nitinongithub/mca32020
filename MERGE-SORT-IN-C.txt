@@ -1,0 +1,98 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include<conio.h>
+
+int GENERATEMAXVALUE (int [], int, int);
+void DISPLAY(int [], int);
+void MERGESORT(int [], int, int);
+void MERGE(int [], int, int, int);
+
+
+int main()
+{
+    int A[] = {10, 8,7,2,3,1,9,5}, len_;
+    
+    len_ = (int)( sizeof(A) / sizeof(A[0]));
+    
+    printf("\nUn-Sorted Array\n\n");
+    DISPLAY(A, len_);
+    
+    MERGESORT(A, 0, len_-1); // Calling a Merge-Sort Function
+    
+    printf("\nSorted Array\n\n");
+    DISPLAY(A, len_);
+
+    return 0;
+}
+
+void MERGESORT(int A[], int p, int r){
+    int q;
+    
+    if(p<r){
+        q = (p+r)/2;
+
+        MERGESORT(A, p, q);
+        MERGESORT(A, q+1, r);
+        MERGE(A, p, q, r);
+    }
+}
+
+void MERGE(int A[], int p, int q, int r){
+    int n1, n2, i, j, k;
+    
+    n1 = q-p+1;
+    n2 = r-q;
+    int L[n1+1], R[n2+1];
+    
+    for(i=0; i<n1; i++){
+        L[i] = A[p+i];
+    }
+    
+    for(j=0; j<n2; j++){
+        R[j] = A[q+j+1];
+    }
+
+    L[n1] = GENERATEMAXVALUE(A, p, r);
+    R[n2] = GENERATEMAXVALUE(A, p, r);
+
+    i = 0;
+    j = 0;
+
+    for(k=p; k<=r; k++){
+        if(L[i] <= R[j]){
+            A[k] = L[i];
+            i = i + 1;
+        } else {
+            A[k] = R[j];
+            j = j + 1;
+        }
+    }
+}
+
+int GENERATEMAXVALUE (int A[], int p, int r){
+    int i, sum=0;
+    
+    for(i=p; i<=r; i++){
+        sum = sum + A[i];
+    }
+return sum+1;
+    
+}
+
+void DISPLAY(int A[], int n){
+    int i;
+    
+    for(i=0; i<n; i++){
+        printf("%d ", A[i]);
+    }
+    printf("\n");
+}
+
+
